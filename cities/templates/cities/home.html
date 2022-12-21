@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{%  block title %}Cities{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 mt-1">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">City</th>
+                    <th scope="col">&nbsp</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for city in object_list %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ city.name }}</td>
+                    <td>&nbsp</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <nav aria-label="...">
+      <ul class="pagination">
+        <li class="page-item">
+            {% if page_obj.has_previous %}
+                <a class="page-link" href="?page=1">First</a>
+            {% endif %}
+        </li>
+
+        {% for pug in page_obj.paginator %}
+            <li class="page-item {% if pug.number == page_obj.number %}active{% endif %}">
+                <a class="page-link" href="?page={{ pug.number }}">{{ pug.number }}</a>
+            </li>
+        {% endfor %}
+
+        <li class="page-item">
+            {% if page_obj.has_next %}
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+        </li>
+      </ul>
+    </nav>
+
+{% endblock %}
