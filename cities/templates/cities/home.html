@@ -35,11 +35,13 @@
             {% endif %}
         </li>
 
-        {% for pug in page_obj.paginator %}
-            <li class="page-item {% if pug.number == page_obj.number %}active{% endif %}">
-                <a class="page-link" href="?page={{ pug.number }}">{{ pug.number }}</a>
-            </li>
-        {% endfor %}
+        {% if page_obj.object_list|length > 5 %}
+            {% for pug in page_obj.paginator %}
+                <li class="page-item {% if pug.number == page_obj.number %}active{% endif %}">
+                    <a class="page-link" href="?page={{ pug.number }}">{{ pug.number }}</a>
+                </li>
+            {% endfor %}
+        {% endif %}
 
         <li class="page-item">
             {% if page_obj.has_next %}
